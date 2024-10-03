@@ -59,8 +59,12 @@ pipeline {
                   checkout scm
                   container('maven-jdk17'){
                     sh "sleep(300)"
-                    sh '/home/jenkins/agent/workspace/spring-petclinic_main/mvnw clean package'
-                    sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
+                    sh 'ls'
+                    sh 'java --version'
+                    sh 'mvn --version'
+                    sh 'mvn clean install'
+                    //sh '/home/jenkins/agent/workspace/spring-petclinic_main/mvnw clean package'
+                    //sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
                     stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
                   }
                 }  
@@ -76,7 +80,7 @@ pipeline {
                   container('kubectl') {
                     script {
                       echo "Current controller pod name is: ${controllerPodName}"
-                        sh "sleep 15" //wait for maven checkout to progress
+                        sh "sleep 45" //wait for maven checkout to progress
                         sh "kubectl delete pod ${controllerPodName}" //delete controller pod to simulate HA cutover action
                       }
                   }
