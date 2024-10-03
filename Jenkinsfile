@@ -58,6 +58,7 @@ pipeline {
                 steps {
                   checkout scm
                   container('maven-jdk17'){
+                    sh "sleep(300)"
                     sh '/home/jenkins/agent/workspace/spring-petclinic_main/mvnw clean package'
                     sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
                     stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
