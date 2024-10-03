@@ -57,7 +57,7 @@ pipeline {
               stage('Maven Build') {
                 steps {
                   checkout scm
-                  container('jdk11'){
+                  container('maven-jdk17'){
                     sh '/home/jenkins/agent/workspace/spring-petclinic_main/mvnw clean package'
                     sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
                     stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
@@ -86,7 +86,7 @@ pipeline {
             stage('SonarQube Analysis') {
               steps {
                 checkout scm
-                container('jdk11'){
+                container('maven-jdk17'){
                   withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
                     sh "./mvnw sonar:sonar \
                     -Dsonar.sourceEncoding=UTF-8 \
