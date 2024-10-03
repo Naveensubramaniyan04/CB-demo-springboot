@@ -58,7 +58,6 @@ pipeline {
                 steps {
                   checkout scm
                   container('maven-jdk17'){
-                    sh "sleep(300)"
                     sh 'ls'
                     sh 'java --version'
                     sh 'mvn --version'
