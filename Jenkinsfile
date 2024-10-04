@@ -58,17 +58,9 @@ pipeline {
                 steps {
                   checkout scm
                   container('open-jdk17'){
-                    withEnv(['HOME=/home/jenkins']) {
-                      sh 'ls'
-                      sh 'java --version'
-                      sh './mvnw clean package'
-                      sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
-                      stash name: 'petclinic-jar', includes: 'target/spring-petclinic-3.3.0-SNAPSHOT.jar'
-                    }
-                    /*sh 'ls'
-                    sh 'export HOME=/home/jenkins'
+                    sh 'ls'
                     sh 'java --version'
-                    //sh 'sleep 600'
+                    sh 'sleep 600'
                     sh '/home/jenkins/agent/workspace/spring-petclinic_main/mvnw clean package'
                     sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
                     stash name: 'petclinic-jar', includes: 'target/spring-petclinic-3.3.0-SNAPSHOT.jar '*/
