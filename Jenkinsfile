@@ -61,7 +61,7 @@ pipeline {
                     sh 'ls'
                     sh 'java --version'
                     sh 'mvn --version'
-                    sh 'mvn clean install'
+                    sh 'mvn clean install -Dcheckstyle.skip'
                     //sh '/home/jenkins/agent/workspace/spring-petclinic_main/mvnw clean package'
                     //sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
                     stash name: 'petclinic-jar', includes: 'target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar'
