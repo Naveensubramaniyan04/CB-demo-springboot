@@ -16,7 +16,7 @@ pipeline {
     stages {
       stage('Extract Controller Pod Name from Logs') {
           steps {
-            script {
+            /*script {
               env.controllerPodName = getControllerPodName()
               if (env.controllerPodName) {
                 echo "Controller Pod Name: ${controllerPodName}"
@@ -24,8 +24,8 @@ pipeline {
               else { 
                 error "Failed to extract the controller pod name"
               }
-            }
-            /*script {
+            }*/
+            script {
               // Introducing a small sleep to ensure logs are populated (if timing is an issue)
               sleep(5)
 
@@ -41,7 +41,7 @@ pipeline {
               } else {
                 echo "Could not find the controller pod name in the logs."
               }
-            }*/
+            }
           }
       }
       stage('Build & Scan') {
@@ -60,7 +60,6 @@ pipeline {
                   container('open-jdk17'){
                     sh 'ls'
                     sh 'java --version'
-                    //sh 'export HOME=/home/jenkins/agent/workspace/spring-petclinic_main'
                     //sh 'sleep 600'
                     sh'echo $HOME'
                     sh './mvnw clean package -Dcheckstyle.skip'
