@@ -16,16 +16,16 @@ pipeline {
     stages {
       stage('Extract Controller Pod Name from Logs') {
           steps {
-            /*script {
-              env.controllerPodName = getControllerPodName()
+            script {
+              env.controllerPodName = getControllerPodName(currentBuild)
               if (env.controllerPodName) {
                 echo "Controller Pod Name: ${controllerPodName}"
               }
               else { 
                 error "Failed to extract the controller pod name"
               }
-            }*/
-            script {
+            }
+            /*script {
               // Introducing a small sleep to ensure logs are populated (if timing is an issue)
               sleep(5)
 
@@ -42,7 +42,7 @@ pipeline {
                 echo "Could not find the controller pod name in the logs."
               }
             }
-          }
+          }*/
       }
       stage('Build & Scan') {
         agent{
