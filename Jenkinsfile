@@ -59,6 +59,7 @@ pipeline {
                   checkout scm
                   container('open-jdk17'){
                     sh 'ls'
+                    sh 'echo $HOME'
                     sh 'java --version'
                     //sh 'mvn --version'
                     //sh 'mvn clean install -U -Dcheckstyle.skip'
