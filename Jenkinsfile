@@ -17,7 +17,8 @@ pipeline {
       stage('Extract Controller Pod Name from Logs') {
           steps {
             script {
-              env.controllerPodName = getControllerPodName(currentBuild)
+              def logOutput = currentBuild.rawBuild.getLog()  // Fetch the logs
+              env.controllerPodName = getControllerPodName(logOutput)
               if (env.controllerPodName) {
                 echo "Controller Pod Name: ${controllerPodName}"
               }
