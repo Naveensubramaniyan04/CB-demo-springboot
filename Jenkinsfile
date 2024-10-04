@@ -60,8 +60,9 @@ pipeline {
                   container('open-jdk17'){
                     sh 'ls'
                     sh 'java --version'
-                    sh 'sleep 600'
-                    sh '/home/jenkins/agent/workspace/spring-petclinic_main/mvnw clean package'
+                    sh 'export HOME=/home/jenkins/agent/workspace/spring-petclinic_main'
+                    //sh 'sleep 600'
+                    sh '/home/jenkins/agent/workspace/spring-petclinic_main/mvnw clean package -Dcheckstyle.skip'
                     sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
                     stash name: 'petclinic-jar', includes: 'target/spring-petclinic-3.3.0-SNAPSHOT.jar '
                   }
