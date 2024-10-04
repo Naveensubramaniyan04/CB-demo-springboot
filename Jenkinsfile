@@ -57,7 +57,7 @@ pipeline {
               stage('Maven Build') {
                 steps {
                   checkout scm
-                  container('open-jdk17'){
+                  container('maven-open-jdk17'){
                     sh 'ls'
                     sh 'java --version'
                     sh 'mvn --version'
@@ -91,7 +91,7 @@ pipeline {
             stage('SonarQube Analysis') {
               steps {
                 checkout scm
-                container('open-jdk17'){
+                container('maven-open-jdk17'){
                   withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
                     sh "./mvnw sonar:sonar \
                     -Dsonar.sourceEncoding=UTF-8 \
