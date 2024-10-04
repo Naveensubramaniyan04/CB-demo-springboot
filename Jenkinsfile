@@ -16,7 +16,7 @@ pipeline {
     stages {
       stage('Extract Controller Pod Name from Logs') {
           steps {
-            script {
+            /*script {
               def logOutput = currentBuild.rawBuild.getLog()  // Fetch the logs
               env.controllerPodName = getControllerPodName(logOutput)
               if (env.controllerPodName) {
@@ -25,8 +25,8 @@ pipeline {
               else { 
                 error "Failed to extract the controller pod name"
               }
-            }
-            /*script {
+            }*/
+            script {
               // Introducing a small sleep to ensure logs are populated (if timing is an issue)
               sleep(5)
 
@@ -42,7 +42,7 @@ pipeline {
               } else {
                 echo "Could not find the controller pod name in the logs."
               }
-            }*/
+            }
           }
       }
       stage('Build & Scan') {
