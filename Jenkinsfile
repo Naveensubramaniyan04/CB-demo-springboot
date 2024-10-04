@@ -69,7 +69,7 @@ pipeline {
                   }
                 }  
               }
-              /*stage('Kubectl Pod Cleanup') {
+              stage('Kubectl Pod Cleanup') {
                 agent {
                   kubernetes {
                     inheritFrom 'kubectl'
@@ -85,7 +85,7 @@ pipeline {
                       }
                   }
                 }
-              }*/
+              }
             }
           }
             stage('SonarQube Analysis') {
