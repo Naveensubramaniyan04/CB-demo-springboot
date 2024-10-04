@@ -13,83 +13,82 @@ pipeline {
     skipDefaultCheckout true
     preserveStashes(buildCount: 10)
   }
-    stages {
-      stage('Extract Controller Pod Name from Logs') {
-          steps {
-            script {
-              env.controllerPodName = System.getenv('HOSTNAME')
-              echo "Controller Pod Name extracted: ${env.controllerPodName}"
-            }
-          }
-      }
-      stage('Build & Scan') {
-        agent{
-          kubernetes {
-            inheritFrom 'maven-app'
-            yaml mvnPodYaml
+  stages {
+    stage('Extract Controller Pod Name from Logs') {
+        steps {
+          script {
+            env.controllerPodName = System.getenv('HOSTNAME')
+            echo "Controller Pod Name extracted: ${env.controllerPodName}"
           }
         }
-        stages{
-          stage('HA Maven Build Realtime') {
-            parallel {
-              stage('Maven Build') {
-                steps {
-                  checkout scm
-                  container('open-jdk17'){
-                    sh 'ls'
-                    sh 'java --version'
-                    //sh 'sleep 600'
-                    sh'echo $HOME'
-                    sh './mvnw clean package -Dcheckstyle.skip'
-                    sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
-                    stash name: 'petclinic-jar', includes: 'target/spring-petclinic-3.3.0-SNAPSHOT.jar '
-                  }
-                }  
-              }
-              stage('Kubectl Pod Cleanup') {
-                agent {
-                  kubernetes {
-                    inheritFrom 'kubectl'
-                    yaml kubectlPodYaml
-                  }
-                }
-                steps {
-                  container('kubectl') {
-                    script {
-                      echo "Current controller pod name is: ${controllerPodName}"
-                        sh "sleep 30" //wait for maven checkout to progress
-                        sh "kubectl delete pod ${controllerPodName}" //delete controller pod to simulate HA cutover action
-                      }
-                  }
-                }
-              }
-            }
-          }
-            stage('SonarQube Analysis') {
+    }
+    stage('Build & Scan') {
+      agent{
+        kubernetes {
+          inheritFrom 'maven-app'
+          yaml mvnPodYaml
+        }
+      }
+      stages{
+        stage('HA Maven Build Realtime') {
+          parallel {
+            stage('Maven Build') {
               steps {
                 checkout scm
                 container('open-jdk17'){
-                  withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
-                    sh "./mvnw sonar:sonar \
-                    -Dsonar.sourceEncoding=UTF-8 \
-                    -Dsonar.language=java \
-                    -Dsonar.projectKey=petclinic-1 \
-                    -Dsonar.host.url=https://sonarqube.cb-demos.io \
-                    -Dsonar.login=${SONAR_SECRET} \
-                    -Dsonar.projectName=petclinic-1 \
-                    -Dsonar.tests=src/test \
-                    -Dsonar.sources=src/main \
-                    -Dsonar.junit.reportsPath=target/surefire-reports \
-                    -Dsonar.surefire.reportsPath=target/surefire-reports \
-                    -Dsonar.jacoco.reportPath=target/jacoco.exec \
-                    -Dsonar.java.binaries=target/classes \
-                    -Dsonar.java.coveragePlugin=jacoco"
-                  }
+                  sh 'ls'
+                  sh 'java --version'
+                  sh 'echo $HOME'
+                  sh './mvnw clean package -Dcheckstyle.skip'
+                  sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
+                  stash name: 'petclinic-jar', includes: 'target/spring-petclinic-3.3.0-SNAPSHOT.jar '
+                }
+              }  
+            }
+            stage('Kubectl Pod Cleanup') {
+              agent {
+                kubernetes {
+                  inheritFrom 'kubectl'
+                  yaml kubectlPodYaml
+                }
+              }
+              steps {
+                container('kubectl') {
+                  script {
+                    echo "Current controller pod name is: ${controllerPodName}"
+                      sh "sleep 30" //wait for maven checkout to progress
+                      sh "kubectl delete pod ${controllerPodName}" //delete controller pod to simulate HA cutover action
+                    }
                 }
               }
             }
+          }
         }
+          stage('SonarQube Analysis') {
+            steps {
+              checkout scm
+              container('open-jdk17'){
+                withCredentials([string(credentialsId: 'thunder-sonar', variable: 'SONAR_SECRET')]) {
+                  sh "./mvnw sonar:sonar \
+                  -Dsonar.sourceEncoding=UTF-8 \
+                  -Dsonar.language=java \
+                  -Dsonar.projectKey=petclinic-1 \
+                  -Dsonar.host.url=https://sonarqube.cb-demos.io \
+                  -Dsonar.login=${SONAR_SECRET} \
+                  -Dsonar.projectName=petclinic-1 \
+                  -Dsonar.tests=src/test \
+                  -Dsonar.sources=src/main \
+                  -Dsonar.junit.reportsPath=target/surefire-reports \
+                  -Dsonar.surefire.reportsPath=target/surefire-reports \
+                  -Dsonar.jacoco.reportPath=target/jacoco.exec \
+                  -Dsonar.java.binaries=target/classes \
+                  -Dsonar.java.coveragePlugin=jacoco"
+                }
+              }
+            }
+          }
       }
+    }
     
     stage('CheckMarx Results') {
         steps {
@@ -128,7 +127,7 @@ pipeline {
                     ]
                 }]'''.stripIndent()
             )
-        } // mock out CheckMarx results to be pulled in to CDRO for quality gate criteria
+        } // mock out CheckMarx results
     }
    
     stage('Publish') {
@@ -136,22 +135,14 @@ pipeline {
         steps {
           unstash 'petclinic-jar'
           echo "Publish petclinic-jar to Nexus"
-          //cloudBeesFlowPublishArtifact artifactName: 'com.cloudbees:petclinic', artifactVersion: '$BUILD_ID', configuration: 'CD', filePath: 'target/*.jar', relativeWorkspace: '', repositoryName: 'default'
-          //archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
         }
     }
 
     stage('Trigger Release') {
       agent any
         steps {
-          echo "Deploy petclinic-jar to GCP"
-          //cloudBeesFlowTriggerRelease configuration: 'CD', parameters: '{"release":{"releaseName":"' + 'PEO BES' + '","stages":"[{\\"stageName\\": \\"Evidence\\", \\"stageValue\\": true}, {\\"stageName\\": \\"Delivery\\", \\"stageValue\\": true}]","parameters":"[]"}}', projectName: 'tjohnson Demo', releaseName: 'PEO BES', startingStage: 'Evidence'}        
+          echo "Deploy petclinic-jar to GCP"       
         }
     }
-    //post {
-        //always {
-            //archiveArtifacts artifacts: 'checkmarx.json', onlyIfSuccessful: true
-        //}
-    //}
-    }
+  } //close stages
 } //pipeline conclusion
