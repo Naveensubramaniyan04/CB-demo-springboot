@@ -60,8 +60,8 @@ pipeline {
                   container('open-jdk17'){
                     sh 'ls'
                     sh 'java --version'
-                    sh 'export HOME=/home/jenkins/agent/workspace/spring-petclinic_main'
-                    sh 'sleep 600'
+                    //sh 'export HOME=/home/jenkins/agent/workspace/spring-petclinic_main'
+                    //sh 'sleep 600'
                     sh'echo $HOME'
                     sh './mvnw clean package -Dcheckstyle.skip'
                     sh 'ls -l /home/jenkins/agent/workspace/spring-petclinic_main/target/'
