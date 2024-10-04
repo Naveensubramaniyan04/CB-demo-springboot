@@ -60,7 +60,7 @@ pipeline {
                   container('open-jdk17'){
                     sh 'ls'
                     sh 'java --version'
-                    sh 'mvn --version'
+                    //sh 'mvn --version'
                     //sh 'mvn clean install -U -Dcheckstyle.skip'
                     //sh 'sleep 600'
                     sh '/home/jenkins/agent/workspace/spring-petclinic_main/mvnw clean package'
