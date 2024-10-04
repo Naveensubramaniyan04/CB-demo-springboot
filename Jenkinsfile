@@ -79,7 +79,7 @@ pipeline {
                   container('kubectl') {
                     script {
                       echo "Current controller pod name is: ${controllerPodName}"
-                        sh "sleep 45" //wait for maven checkout to progress
+                        sh "sleep 30" //wait for maven checkout to progress
                         sh "kubectl delete pod ${controllerPodName}" //delete controller pod to simulate HA cutover action
                       }
                   }
