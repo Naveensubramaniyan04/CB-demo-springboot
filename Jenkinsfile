@@ -41,8 +41,8 @@ pipeline {
               } else {
                 echo "Could not find the controller pod name in the logs."
               }
-            }
-          }*/
+            }*/
+          }
       }
       stage('Build & Scan') {
         agent{
