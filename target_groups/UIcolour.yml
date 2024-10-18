@@ -1,5 +1,0 @@
-type: target-group
-name: UIcolour
-conditions:
-  - operator: is-undefined
-    property: rox.platform
