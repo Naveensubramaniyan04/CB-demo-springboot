@@ -1,0 +1,8 @@
+# This file was edited by CloudBees Feature Management
+type: experiment
+flag: specialNumber
+availableValues:
+  - 2.71
+  - 0.577
+  - 3.14
+value: 3.14
