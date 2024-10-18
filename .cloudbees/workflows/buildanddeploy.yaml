@@ -29,12 +29,12 @@ jobs:
         id: dockerconfig
         uses: cloudbees-io/configure-oci-credentials@v1
         with:
-          registry: ${{ secrets.STAGING_DOCKER_REGISTRY }}
-          username: ${{ secrets.STAGING_DOCKER_USERNAME }}
-          password: ${{ secrets.STAGING_DOCKER_PASSWORD }}
+          registry: ${{ secrets.dockerurl }}
+          username: ${{ secrets.dockerusername}}
+          password: ${{ secrets.dockerpasswd}}
       - name: Push image to OCI registry
         uses: cloudbees-io/kaniko@v1
         with:
           dockerfile: Dockerfile
           context: .
-          destination: ${{ secrets.STAGING_DOCKER_REGISTRY }}/${{ secrets.STAGING_DOCKER_USERNAME }}/petclinic3.2.4
+          destination: ${{ secrets.dockerurl }}/${{ secrets.dockerusername }}/petclinic:3.2.4
