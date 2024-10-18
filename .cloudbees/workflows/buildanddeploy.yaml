@@ -20,5 +20,7 @@ jobs:
       - uses: docker://maven:3-eclipse-temurin-17
         name: Build
         kind: build
-        run: mvn clean package
+        run: |
+         mvn spring-javaformat:apply
+         mvn clean package
         shell: sh
