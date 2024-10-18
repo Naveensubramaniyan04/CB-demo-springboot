@@ -140,6 +140,12 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>io.rollout.rox</groupId>
+      <artifactId>rox-java-server</artifactId>
+      <version>5.0.4</version>
+    </dependency>
+
   </dependencies>
 
   <build>

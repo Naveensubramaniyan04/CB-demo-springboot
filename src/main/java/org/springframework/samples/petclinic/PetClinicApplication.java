@@ -16,9 +16,16 @@
 
 package org.springframework.samples.petclinic;
 
+import io.rollout.client.ConfigurationFetchedHandler;
+import io.rollout.client.FetcherResults;
+import io.rollout.client.FetcherStatus;
+import io.rollout.rox.server.Rox;
+import io.rollout.rox.server.RoxOptions;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * PetClinic Spring Boot Application.
@@ -30,8 +37,49 @@ import org.springframework.context.annotation.ImportRuntimeHints;
 @ImportRuntimeHints(PetClinicRuntimeHints.class)
 public class PetClinicApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PetClinicApplication.class, args);
-	}
+	public static void main(String[] args) throws ExecutionException, InterruptedException {
 
+		SpringApplication.run(PetClinicApplication.class, args);
+
+		// Initialize container class that we created earlier
+		Flags flags = new Flags();
+		// Register the flags container with Rollout
+		Rox.register(flags);
+		// Building options
+		RoxOptions options = new RoxOptions.Builder()
+			.withConfigurationFetchedHandler(new ConfigurationFetchedHandler() {
+				@Override
+				public void onConfigurationFetched(FetcherResults fetcherResults) {
+					if (fetcherResults != null) {
+						FetcherStatus status = fetcherResults.getFetcherStatus();
+						// configuration loaded from network, flags value updated
+						if (status != null && status == FetcherStatus.AppliedFromNetwork) {
+							System.out.println("flags value updated");
+						}
+					}
+				}
+			})
+			.build();
+		// Setup the Rollout environment key
+		Rox.setup("66fe9bb334863653de479a9e", options).get();
+		// Boolean flag example
+		if (flags.enableTutorial.isEnabled()) {
+			// TODO:  Put your code here that needs to be gated
+		}
+		// String flag example
+		String titleColor = flags.titleColors.getValue();
+		System.out.printf("Title color is %s\n", titleColor);
+		// Integer flag example
+		int titleSize = flags.titleSize.getValue();
+		System.out.printf("Title size is %d\n", titleSize);
+		// Double flag example
+		double specialNumber = flags.specialNumber.getValue();
+		System.out.printf("Special number is %f\n", specialNumber);
+		// Enum flag example
+		Flags.Color color = flags.titleColorsEnum.getValue();
+		System.out.printf("Enum color is %s\n", color.name());
+
+	}
 }
+
+
