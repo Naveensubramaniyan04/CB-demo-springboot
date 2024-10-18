@@ -9,4 +9,9 @@ availableValues:
 platforms:
   - name: Browser
   - name: Java
+conditions:
+  - dependency:
+      flag: titleColorsEnum
+      value: YELLOW
+    value: Green
 value: White
