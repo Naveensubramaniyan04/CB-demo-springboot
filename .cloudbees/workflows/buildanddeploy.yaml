@@ -42,4 +42,3 @@ jobs:
           dockerfile: Dockerfile
           context: .
           destination: ${{ secrets.dockerurl }}/${{ secrets.dockerusername }}/petclinic:3.2.4
-
