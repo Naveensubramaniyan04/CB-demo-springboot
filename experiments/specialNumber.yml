@@ -5,4 +5,7 @@ availableValues:
   - 2.71
   - 0.577
   - 3.14
+platforms:
+  - name: Browser
+  - name: Java
 value: 3.14
