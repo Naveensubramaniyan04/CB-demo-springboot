@@ -5,4 +5,7 @@ availableValues:
   - Yellow
   - Green
   - Blue
+platforms:
+  - name: Browser
+  - name: Java
 value: White
