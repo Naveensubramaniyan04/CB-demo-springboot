@@ -32,6 +32,7 @@ jobs:
           registry: ${{ secrets.dockerurl }}
           username: ${{ secrets.dockerusername}}
           password: ${{ secrets.dockerpasswd}}
+          
       - name: Push image to OCI registry
         uses: cloudbees-io/kaniko@v1
         with:
