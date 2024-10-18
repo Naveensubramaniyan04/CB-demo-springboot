@@ -8,4 +8,5 @@ availableValues:
 platforms:
   - name: Browser
   - name: Java
+    value: 14
 value: 14
