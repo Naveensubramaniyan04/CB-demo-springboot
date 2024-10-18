@@ -7,7 +7,6 @@ on:
       - master
 jobs:
   Build:
-   
     steps:
       - name: Configure git
         uses: docker://alpine/git:latest
@@ -25,13 +24,17 @@ jobs:
          mvn clean package
         shell: sh
 
+      - name: Verify Dockerfile location
+        uses: docker://maven:3-eclipse-temurin-17
+        run: ls -al ./
+      
       - name: Configure container registry credentials
         id: dockerconfig
         uses: cloudbees-io/configure-oci-credentials@v1
         with:
           registry: ${{ secrets.dockerurl }}
-          username: ${{ secrets.dockerusername}}
-          password: ${{ secrets.dockerpasswd}}
+          username: ${{ secrets.dockerusername }}
+          password: ${{ secrets.dockerpasswd }}
           
       - name: Push image to OCI registry
         uses: cloudbees-io/kaniko@v1
