@@ -10,4 +10,9 @@ platforms:
   - name: Browser
   - name: Java
     value: WHITE
+conditions:
+  - dependency:
+      flag: titleColors
+      value: Green
+    value: GREEN
 value: WHITE
