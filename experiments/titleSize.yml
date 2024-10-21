@@ -9,4 +9,8 @@ platforms:
   - name: Browser
   - name: Java
     value: 14
+conditions:
+  - group:
+      name: petclinic-target group
+    value: 18
 value: 14
