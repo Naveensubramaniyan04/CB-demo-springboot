@@ -10,8 +10,7 @@ platforms:
   - name: Browser
   - name: Java
 conditions:
-  - dependency:
-      flag: titleColorsEnum
-      value: YELLOW
-    value: Green
+  - group:
+      name: petclinic-target group
+    value: Yellow
 value: White
