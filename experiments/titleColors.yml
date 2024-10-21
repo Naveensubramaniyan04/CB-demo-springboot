@@ -9,4 +9,8 @@ availableValues:
 platforms:
   - name: Browser
   - name: Java
+conditions:
+  - group:
+      name: petclinic-target group
+    value: White
 value: White
