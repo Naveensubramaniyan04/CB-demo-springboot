@@ -9,9 +9,4 @@ platforms:
   - name: Browser
   - name: Java
     value: 3.14
-conditions:
-  - dependency:
-      flag: enableTutorial
-      value: 'false'
-    value: 3.14
 value: 3.14
