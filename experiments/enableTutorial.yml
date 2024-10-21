@@ -6,11 +6,4 @@ platforms:
     value: false
   - name: Java
     value: true
-conditions:
-  - group:
-      operator: and
-      name: petclinic-target group
-    value:
-      - percentage: 50
-        option: true
 value: true
