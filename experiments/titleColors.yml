@@ -12,5 +12,13 @@ platforms:
 conditions:
   - group:
       name: petclinic-target group
-    value: Yellow
+    value:
+      - percentage: 25
+        option: Yellow
+      - percentage: 25
+        option: Green
+      - percentage: 25
+        option: Blue
+      - percentage: 25
+        option: White
 value: White
