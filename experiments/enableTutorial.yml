@@ -10,5 +10,7 @@ conditions:
   - group:
       operator: and
       name: petclinic-target group
-    value: true
+    value:
+      - percentage: 50
+        option: true
 value: true
