@@ -1,29 +1,173 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to PetClinic</title>
+    
+    <!-- Link to Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Link to FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+    <!-- Basic CSS for a modern layout -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('https://via.placeholder.com/1920x1080'); /* Add your own background image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
 
-  <body>
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+            backdrop-filter: blur(10px); /* Adds a modern blur effect */
+        }
 
-    <h2 th:text="#{welcome}">Welcome</h2>
-    <div class="row">
-        <div class="col-md-12">
-          <img class="img-responsive" src="../static/resources/images/pets.png" th:src="@{/resources/images/pets.png}"/>
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .btn i {
+            margin-right: 8px; /* Icon spacing */
+        }
+
+        footer {
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            color: #7f8c8d;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style for the image */
+        .header-image {
+            max-width: 120px;
+            margin-bottom: 1.5rem;
+            border-radius: 50%; /* Make the image circular */
+            border: 3px solid #3498db; /* Add a border to match the theme */
+        }
+
+        /* Icon box for visual features */
+        .icon-box {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .icon-box i {
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 0.5rem;
+        }
+
+        .icon-box h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .icon-box p {
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Image or Logo -->
+        <img src="https://img.freepik.com/premium-vector/pet-clinic-logo-design_626969-91.jpg" alt="PetClinic Logo" class="header-image">
+
+        <h1>Welcome to PetClinic</h1>
+        <p>Your trusted partner in providing the best care for your pets. We offer a wide range of veterinary services, from preventive care to advanced diagnostics and treatment.</p>
+
+        <!-- Action Buttons with icons -->
+        <a href="/owners/find" class="btn">
+            <i class="fas fa-search"></i> Find Owners
+        </a>
+        <a href="/vets" class="btn">
+            <i class="fas fa-user-md"></i> View Vets
+        </a>
+
+        <!-- Icon-based features section -->
+        <div class="icon-box">
+            <i class="fas fa-dog"></i>
+            <h3>Comprehensive Care</h3>
+            <p>We offer full veterinary services for your pets, from routine checkups to advanced care.</p>
         </div>
+
+        <footer>
+            <p>Need assistance? <a href="/contact">Contact Us</a></p>
+        </footer>
     </div>
 
     <script>
         // JavaScript function to call the backend and change h2 font color
-        function fetchAndChangeH2Color() {
+        function fetchAndChangeH1Color() {
             // Fetch the font color from the backend (Spring Boot controller)
             fetch('/fontColor')
                 .then(response => response.text())  // Parse the response as plain text
                 .then(color => {
-                    // Get all h2 elements
-                    const h2Elements = document.querySelectorAll('h2');
+                    // Get all h1 elements
+                    const h1Elements = document.querySelectorAll('h1');
 
-                    // Loop through each h2 element and change the color
-                    h2Elements.forEach(function(h2) {
-                        h2.style.color = color;
+                    // Loop through each h1 element and change the color
+                    h1Elements.forEach(function(h1) {
+                        h1.style.color = color;
                     });
                 })
                 .catch(error => console.error('Error fetching font color:', error));
@@ -31,10 +175,10 @@
 
         // Call the function on page load
         window.onload = function() {
-            fetchAndChangeH2Color();  // Fetch and apply the color when the page loads
+            fetchAndChangeH1Color();  // Fetch and apply the color when the page loads
         };
     </script>
 
-  </body>
-
+</body>
 </html>
+
