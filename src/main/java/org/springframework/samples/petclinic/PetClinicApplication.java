@@ -64,7 +64,7 @@ public class PetClinicApplication {
 		// Setup the Rollout environment key
 	    // @naqh01 commenting out Rox.setup("66fe9bb334863653de479a9e", options).get();
 	    // @nash01 pointing to cloudbees.io
-		Rox.setup(4428b893-9511-47eb-7c05-a95f62ba4e23).get();
+		Rox.setup("4428b893-9511-47eb-7c05-a95f62ba4e23").get();
 
 		
 		// Boolean flag example
