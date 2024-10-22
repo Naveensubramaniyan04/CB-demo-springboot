@@ -16,6 +16,8 @@
 
 package org.springframework.samples.petclinic;
 
+import org.springframework.samples.petclinic.controller.FontColorController;
+
 import io.rollout.client.ConfigurationFetchedHandler;
 import io.rollout.client.FetcherResults;
 import io.rollout.client.FetcherStatus;
@@ -37,12 +39,14 @@ import java.util.concurrent.ExecutionException;
 @ImportRuntimeHints(PetClinicRuntimeHints.class)
 public class PetClinicApplication {
 
+	public static Flags flags;
+
 	public static void main(String[] args) throws ExecutionException, InterruptedException {
 
 		SpringApplication.run(PetClinicApplication.class, args);
 
 		// Initialize Flags container class
-		Flags flags = new Flags();
+		flags = new Flags();
 
 		// Register the flags container under a namespace
 		Rox.register("default", flags);
@@ -91,17 +95,6 @@ public class PetClinicApplication {
 		// Enum flag example
 		Flags.Color color = flags.titleColorsEnum.getValue();
 		System.out.printf("Enum color is %s\n", color.name());
-
-	}
-
-	@Controller
-	public class FontColorController {
-
-		@GetMapping("/fontColor")
-		@ResponseBody
-		public String getFontColor() {
-			return flags.titleColors.getValue();
-		}
 
 	}
 
