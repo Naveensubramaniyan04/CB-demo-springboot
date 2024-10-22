@@ -41,6 +41,21 @@ public class PetClinicApplication {
 
 		SpringApplication.run(PetClinicApplication.class, args);
 
+        // Initialize Flags container class
+        Flags flags = new Flags();
+
+        // Register the flags container under a namespace
+        Rox.register("default", flags);
+
+        // Setup connection with the feature management environment key
+        Rox.setup(4428b893-9511-47eb-7c05-a95f62ba4e23).get();
+
+        // Prints the value of the boolean enableTutorial flag
+        printf("enableTutorial value is %s", flags.enableTutorial.isEnabled() ? "true" : "false");
+
+		
+/* @nash01 commentting out this block 
+
 		// Initialize container class that we created earlier
 		Flags flags = new Flags();
 		// Register the flags container with Rollout
@@ -71,6 +86,10 @@ public class PetClinicApplication {
 		if (flags.enableTutorial.isEnabled()) {
 			// TODO:  Put your code here that needs to be gated
 		}
+
+*/ 
+
+		
 		// String flag example
 		String titleColor = flags.titleColors.getValue();
 		System.out.printf("Title color is %s\n", titleColor);
