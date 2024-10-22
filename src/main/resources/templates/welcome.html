@@ -4,12 +4,36 @@
 
   <body>
 
-    <h2 th:text="#{welcome}">Hello!</h2>
+    <h2 th:text="#{welcome}">Welcome</h2>
     <div class="row">
         <div class="col-md-12">
           <img class="img-responsive" src="../static/resources/images/pets.png" th:src="@{/resources/images/pets.png}"/>
         </div>
     </div>
+
+    <script>
+        // JavaScript function to call the backend and change h2 font color
+        function fetchAndChangeH2Color() {
+            // Fetch the font color from the backend (Spring Boot controller)
+            fetch('/fontColor')
+                .then(response => response.text())  // Parse the response as plain text
+                .then(color => {
+                    // Get all h2 elements
+                    const h2Elements = document.querySelectorAll('h2');
+
+                    // Loop through each h2 element and change the color
+                    h2Elements.forEach(function(h2) {
+                        h2.style.color = color;
+                    });
+                })
+                .catch(error => console.error('Error fetching font color:', error));
+        }
+
+        // Call the function on page load
+        window.onload = function() {
+            fetchAndChangeH2Color();  // Fetch and apply the color when the page loads
+        };
+    </script>
 
   </body>
 
