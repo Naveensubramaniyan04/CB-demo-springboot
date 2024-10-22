@@ -48,7 +48,7 @@ public class PetClinicApplication {
         Rox.register("default", flags);
 
         // Setup connection with the feature management environment key
-        Rox.setup("4428b893-9511-47eb-7c05-a95f62ba4e23").get();
+        Rox.setup("4428b893-9511-47eb-7c05-a95f62ba4e23", options).get();
 
         // Prints the value of the boolean enableTutorial flag
 		if (flags.enableTutorial.isEnabled()) {
