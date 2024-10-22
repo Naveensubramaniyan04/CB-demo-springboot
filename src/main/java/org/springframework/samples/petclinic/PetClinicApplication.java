@@ -106,6 +106,18 @@ public class PetClinicApplication {
 		System.out.printf("Enum color is %s\n", color.name());
 
 	}
+
+	@Controller
+	public class FontColorController {
+	
+	    @GetMapping("/fontColor")
+	    @ResponseBody
+	    public String getFontColor() {
+	        return flags.titleColors.getValue();
+	    }
+	}
+
+	
 }
 
 
