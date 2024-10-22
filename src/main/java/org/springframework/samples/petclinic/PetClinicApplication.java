@@ -41,57 +41,44 @@ public class PetClinicApplication {
 
 		SpringApplication.run(PetClinicApplication.class, args);
 
-        // Initialize Flags container class
-        Flags flags = new Flags();
-
-        // Register the flags container under a namespace
-        Rox.register("default", flags);
-
-        // Setup connection with the feature management environment key
-        Rox.setup("aa61857a-0ca1-4e9d-4616-55e416873ce4").get();
-
-        // Prints the value of the boolean enableTutorial flag
-		if (flags.enableTutorial.isEnabled()) {
-			// TODO:  Put your code here that needs to be gated
-		}
-
-		
-/* @nash01 commentting out this block 
-
-		// Initialize container class that we created earlier
+		// Initialize Flags container class
 		Flags flags = new Flags();
-		// Register the flags container with Rollout
-		Rox.register(flags);
-		// Building options
-		RoxOptions options = new RoxOptions.Builder()
-			.withConfigurationFetchedHandler(new ConfigurationFetchedHandler() {
-				@Override
-				public void onConfigurationFetched(FetcherResults fetcherResults) {
-					if (fetcherResults != null) {
-						FetcherStatus status = fetcherResults.getFetcherStatus();
-						// configuration loaded from network, flags value updated
-						if (status != null && status == FetcherStatus.AppliedFromNetwork) {
-							System.out.println("flags value updated");
-						}
-					}
-				}
-			})
-			.build();
 
-		// Setup the Rollout environment key
-	    // @naqh01 commenting out Rox.setup("66fe9bb334863653de479a9e", options).get();
-	    // @nash01 pointing to cloudbees.io
-		Rox.setup("4428b893-9511-47eb-7c05-a95f62ba4e23").get();
+		// Register the flags container under a namespace
+		Rox.register("default", flags);
 
-		
-		// Boolean flag example
+		// Setup connection with the feature management environment key
+		Rox.setup("aa61857a-0ca1-4e9d-4616-55e416873ce4").get();
+
+		// Prints the value of the boolean enableTutorial flag
 		if (flags.enableTutorial.isEnabled()) {
-			// TODO:  Put your code here that needs to be gated
+			// TODO: Put your code here that needs to be gated
 		}
 
-*/ 
+		/*
+		 * @nash01 commentting out this block
+		 *
+		 * // Initialize container class that we created earlier Flags flags = new
+		 * Flags(); // Register the flags container with Rollout Rox.register(flags); //
+		 * Building options RoxOptions options = new RoxOptions.Builder()
+		 * .withConfigurationFetchedHandler(new ConfigurationFetchedHandler() {
+		 *
+		 * @Override public void onConfigurationFetched(FetcherResults fetcherResults) {
+		 * if (fetcherResults != null) { FetcherStatus status =
+		 * fetcherResults.getFetcherStatus(); // configuration loaded from network, flags
+		 * value updated if (status != null && status == FetcherStatus.AppliedFromNetwork)
+		 * { System.out.println("flags value updated"); } } } }) .build();
+		 *
+		 * // Setup the Rollout environment key // @naqh01 commenting out
+		 * Rox.setup("66fe9bb334863653de479a9e", options).get(); // @nash01 pointing to
+		 * cloudbees.io Rox.setup("4428b893-9511-47eb-7c05-a95f62ba4e23").get();
+		 *
+		 *
+		 * // Boolean flag example if (flags.enableTutorial.isEnabled()) { // TODO: Put
+		 * your code here that needs to be gated }
+		 *
+		 */
 
-		
 		// String flag example
 		String titleColor = flags.titleColors.getValue();
 		System.out.printf("Title color is %s\n", titleColor);
@@ -109,15 +96,13 @@ public class PetClinicApplication {
 
 	@Controller
 	public class FontColorController {
-	
-	    @GetMapping("/fontColor")
-	    @ResponseBody
-	    public String getFontColor() {
-	        return flags.titleColors.getValue();
-	    }
+
+		@GetMapping("/fontColor")
+		@ResponseBody
+		public String getFontColor() {
+			return flags.titleColors.getValue();
+		}
+
 	}
 
-	
 }
-
-
