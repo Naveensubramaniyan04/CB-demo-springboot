@@ -51,7 +51,9 @@ public class PetClinicApplication {
         Rox.setup("4428b893-9511-47eb-7c05-a95f62ba4e23").get();
 
         // Prints the value of the boolean enableTutorial flag
-        printf("enableTutorial value is %s", flags.enableTutorial.isEnabled() ? "true" : "false");
+		if (flags.enableTutorial.isEnabled()) {
+			// TODO:  Put your code here that needs to be gated
+		}
 
 		
 /* @nash01 commentting out this block 
