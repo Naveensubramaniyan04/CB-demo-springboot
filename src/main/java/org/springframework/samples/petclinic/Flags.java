@@ -13,7 +13,7 @@ public class Flags implements RoxContainer {
 
 	public final RoxInt titleSize = new RoxInt(14, new int[] { 14, 18, 24 });
 
-	public final RoxDouble specialNumber = new RoxDouble(3.14, new double[] { 2.71, 0.577 });
+	public final RoxDouble specialNumber = new RoxDouble(3.140000, new double[] { 2.71, 0.577 });
 
 	public final RoxEnum<Color> titleColorsEnum = new RoxEnum<>(Color.WHITE);
 
