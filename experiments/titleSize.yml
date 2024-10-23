@@ -5,6 +5,7 @@ availableValues:
   - 24
   - 18
   - 14
+  - 3.5rem
 platforms:
   - name: Browser
   - name: Java
