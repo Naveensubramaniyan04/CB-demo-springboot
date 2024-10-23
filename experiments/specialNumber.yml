@@ -4,7 +4,7 @@ flag: specialNumber
 availableValues:
   - 2.71
   - 0.577
-  - 3.14
+  - 3.140000
 platforms:
   - name: Browser
   - name: Java
