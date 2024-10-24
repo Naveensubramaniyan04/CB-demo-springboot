@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: springpetclinic-ingress
-  namespace: naveen
+  namespace: samplepetclinic
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
@@ -10,7 +10,7 @@ spec:
     - host: ""
       http:
         paths:
-          - path: /pet
+          - path: /pets
             pathType: Prefix
             backend:
               service:
