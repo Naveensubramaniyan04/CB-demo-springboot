@@ -2,7 +2,6 @@ package org.springframework.samples.petclinic.controller;
 
 import org.springframework.samples.petclinic.PetClinicApplication;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +13,12 @@ public class FontColorController {
 	@ResponseBody
 	public String getFontColor() {
 		return PetClinicApplication.flags.titleColors.getValue();
+	}
+
+	@GetMapping("/fontSize")
+	@ResponseBody
+	public int getFontSize() {
+		return PetClinicApplication.flags.titleSize.getValue();
 	}
 
 }

@@ -88,7 +88,7 @@ public class PetClinicApplication {
 		System.out.printf("Title color is %s\n", titleColor);
 		// Integer flag example
 		int titleSize = flags.titleSize.getValue();
-		System.out.printf("Title size is %d\n", titleSize);
+		System.out.printf("Title sizes  is %d\n", titleSize);
 		// Double flag example
 		double specialNumber = flags.specialNumber.getValue();
 		System.out.printf("Special number is %f\n", specialNumber);
