@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: springpetclinic-deployment
-  namespace: naveen
+  namespace: samplepetclinic
   labels:
     app: springpetclinic
 spec:
@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: springpetclinic
-          image: naveensubramaniyan640/petclinic:3.2.4
+          image: naveensubramaniyan640/samplepetclinic:3.2.4
           ports:
             - containerPort: 8080
